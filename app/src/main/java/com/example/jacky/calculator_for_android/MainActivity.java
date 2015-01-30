@@ -48,7 +48,25 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v){
         String buttonPressed = ((Button) v).getText().toString();
-        if(DIGITS.contains(buttonPressed)){
+        if(buttonPressed.equals("C")){
+            mCalculatorBrain.clear();
+            mCalculatorDisplay.setText(Double.toString(mCalculatorBrain.getResult()));
+            userIsInTheMiddleOfTypingANumber = false;
+        }
+        else if(buttonPressed.equals("+/-")){
+            mCalculatorBrain.setmWaitingOperand(-Double.parseDouble(mCalculatorDisplay.getText().toString()));
+            mCalculatorBrain.setmOperand(mCalculatorBrain.getResult());
+            mCalculatorDisplay.setText(Double.toString(mCalculatorBrain.getResult()));
+        }
+        else if(buttonPressed.equals("=")){
+            mCalculatorBrain.setmOperand(Double.parseDouble(mCalculatorDisplay.getText().toString()));
+            mCalculatorBrain.performOperation(mCalculatorBrain.getmWaitingOperator());
+            userIsInTheMiddleOfTypingANumber = true;
+            mCalculatorDisplay.setText(Double.toString(mCalculatorBrain.getResult()));
+            mCalculatorBrain.setmWaitingOperator("");
+        }
+        else if(DIGITS.contains(buttonPressed)){
+//            if(Double.parseDouble(mCalculatorDisplay.getText().toString()) == (int)Double.parseDouble(mCalculatorDisplay.getText().toString()))
             if (userIsInTheMiddleOfTypingANumber) {
 
                 if (buttonPressed.equals(".") && mCalculatorDisplay.getText().toString().contains(".")) {
@@ -59,6 +77,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 }
 
             } else {
+                if(mCalculatorBrain.getmWaitingOperator().equals("")) mCalculatorBrain.clear();
 
                 if (buttonPressed.equals(".")) {
                     // ERROR PREVENTION
@@ -75,12 +94,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         else{
             if(userIsInTheMiddleOfTypingANumber){
                 mCalculatorBrain.setmOperand(Double.parseDouble(mCalculatorDisplay.getText().toString()));
+                System.out.println("mOperand is "+mCalculatorBrain.getmOperand());
+                System.out.println("mWaitingOperation is "+mCalculatorBrain.getResult());
+                System.out.println("mWaitingOperator is "+mCalculatorBrain.getmWaitingOperator());
+                mCalculatorBrain.performOperation(mCalculatorBrain.getmWaitingOperator());
+                System.out.println("mWaitingOperation is "+mCalculatorBrain.getResult());
+                mCalculatorBrain.setmWaitingOperator(buttonPressed);
                 userIsInTheMiddleOfTypingANumber = false;
             }
-            mCalculatorBrain.performOperation(buttonPressed);
+            mCalculatorBrain.setmWaitingOperator(buttonPressed);
             mCalculatorDisplay.setText(Double.toString(mCalculatorBrain.getResult()));
-            mCalculatorBrain.setmOperand(0);
-
         }
 
 
