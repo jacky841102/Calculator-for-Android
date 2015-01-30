@@ -61,7 +61,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         else if(buttonPressed.equals("=")){
             mCalculatorBrain.setmOperand(Double.parseDouble(mCalculatorDisplay.getText().toString()));
             mCalculatorBrain.performOperation(mCalculatorBrain.getmWaitingOperator());
-            userIsInTheMiddleOfTypingANumber = true;
+            userIsInTheMiddleOfTypingANumber = false;
             mCalculatorDisplay.setText(Double.toString(mCalculatorBrain.getResult()));
             mCalculatorBrain.setmWaitingOperator("");
         }
