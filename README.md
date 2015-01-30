@@ -1,6 +1,6 @@
 # Calculator-for-Android
 
-A simple calculator app which including the following function:
+A simple calculator app which includes the following function:
 + Addition
 + Subtraction
 + Multiplication
